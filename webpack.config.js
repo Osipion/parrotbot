@@ -1,7 +1,8 @@
 let webpack = require('webpack'),
     path = require('path'),
     fs = require('fs'),
-    nodeExternals = require('webpack-node-externals');
+    nodeExternals = require('webpack-node-externals'),
+    uglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     context: __dirname,
@@ -29,6 +30,6 @@ module.exports = {
         extensions: [".tsx", ".ts"]
     },
     plugins: [
-        //new webpack.optimize.UglifyJsPlugin({ minimize: true, sourcemap: false }),
+        new uglifyJsPlugin({ minimize: true, sourcemap: false }),
     ]
 };
