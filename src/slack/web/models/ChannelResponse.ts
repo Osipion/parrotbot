@@ -1,4 +1,4 @@
-import {ResponseData} from './ResponseData'
+import {ResponseData} from "./ResponseData";
 import {Response} from "../../../Response";
 
 export interface ChannelResponseData extends ResponseData {

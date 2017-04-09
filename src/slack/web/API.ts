@@ -1,8 +1,7 @@
-
 import {PostMessageResponse, PostMessageResponseData} from "./models/PostMessageResponse";
-import {RequestOptions} from 'https'
+import {RequestOptions} from "https";
 import {RawResponse, Response} from "../../Response";
-import {send, parseJson} from '../../Utils'
+import {send, parseJson} from "../../Utils";
 
 
 export type Client = (options: RequestOptions, body?: string) => Promise<RawResponse>

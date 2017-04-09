@@ -13,7 +13,7 @@ These may be set along with the code in the AWS Lambda console.
 If you have typescript installed globally:
 
 ```shell
-npm install && npm link typescript && npm run webpack`
+npm install && npm link typescript && npm run webpack
 ```
 
 And if you don't:

@@ -1,13 +1,14 @@
-
-import * as AWS from './AWS'
+import * as AWS from "./AWS";
 
 export class MediaType {
     static get json(): string {
         return 'application/json';
     }
+
     static get text(): string {
         return 'text';
     }
+
     static get html(): string {
         return 'text/html';
     }
@@ -16,10 +17,10 @@ export class MediaType {
 function newHeaders(data?: string, mediaType?: string): {[name: string]: string} {
     let headers: {[name: string]: string} = {};
 
-    if(data) {
+    if (data) {
         headers = {};
         headers['Content-Length'] = data.length.toString();
-        if(!mediaType) {
+        if (!mediaType) {
             mediaType = MediaType.json
         }
         headers['Content-Type'] = mediaType;

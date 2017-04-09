@@ -1,14 +1,13 @@
 ///<reference path="../../typings/index.d.ts"/>
-
-import * as AWS from '../AWS'
-import {ok, badRequest, MediaType} from '../Responses'
-import {run, parseJson} from '../Utils'
-import {logError, logInfo} from '../Logging'
+import * as AWS from "../AWS";
+import {ok, badRequest, MediaType} from "../Responses";
+import {run, parseJson} from "../Utils";
+import {logError, logInfo} from "../Logging";
 import {WebApi} from "../slack/web/API";
-import {Event as SlackEvent} from "../slack/events/models/Event"
-import {AnyCallback as AnySlackCallback} from "../slack/events/models/Callback"
-import {Message as SlackMessage} from "../slack/events/models/Message"
-import {Challenge as SlackChallenge} from "../slack/events/models/Challenge"
+import {Event as SlackEvent} from "../slack/events/models/Event";
+import {AnyCallback as AnySlackCallback} from "../slack/events/models/Callback";
+import {Message as SlackMessage} from "../slack/events/models/Message";
+import {Challenge as SlackChallenge} from "../slack/events/models/Challenge";
 import CallbackEventType from "../slack/events/CallbackEventTypes";
 import EventType from "../slack/events/EventTypes";
 
@@ -17,7 +16,7 @@ function parseState(state: AWS.AnyState): Promise<AWS.State<SlackEvent>> {
         try {
             let data = parseJson<SlackEvent>(state.aws.event.body);
 
-            if(!data || !data.type) {
+            if (!data || !data.type) {
                 reject(new Error(`Invalid slack request - missing type.`));
             } else {
                 logInfo(JSON.stringify({data: data}));
@@ -43,16 +42,16 @@ function printState(state: AWS.AnyState): void {
 
 function handleChallenge(state: AWS.State<SlackChallenge>): Promise<AWS.Result> {
     return new Promise((resolve, reject) => {
-       let data = JSON.stringify({
-           challenge: state.data.challenge
-       });
-       resolve({message: ok(data, MediaType.json)});
-       logInfo(`Was challenged by slack - challenge code: ${state.data.challenge}`);
+        let data = JSON.stringify({
+            challenge: state.data.challenge
+        });
+        resolve({message: ok(data, MediaType.json)});
+        logInfo(`Was challenged by slack - challenge code: ${state.data.challenge}`);
     });
 }
 
 function shouldRespond(message: SlackMessage): boolean {
-        //it isn't us - bot messages use the 'username' not 'user' field
+    //it isn't us - bot messages use the 'username' not 'user' field
     return message.event.username !== 'parrotbot' &&
         //it's in the test channel
         message.event.channel === process.env.TARGET_CHANNEL;
@@ -61,7 +60,7 @@ function shouldRespond(message: SlackMessage): boolean {
 function handleMessage(state: AWS.State<SlackMessage>): Promise<AWS.Result> {
     return new Promise((resolve) => {
         resolve({message: ok()});
-        if(shouldRespond(state.data)) {
+        if (shouldRespond(state.data)) {
             WebApi.postMessage(state.data.event.channel, state.data.event.text)
                 .then(_ => {
                     logInfo('Successful POST to slack.');
@@ -79,9 +78,9 @@ function handleDebug(state: AWS.State<SlackEvent>): Promise<AWS.Result> {
 
     return new Promise<AWS.Result>(resolve => {
         let data = JSON.stringify({
-           state: state
+            state: state
         });
-       resolve({message: ok(data, MediaType.json)})
+        resolve({message: ok(data, MediaType.json)})
     });
 }
 
@@ -102,10 +101,10 @@ function handleGeneralEvent(state: AWS.State<AnySlackCallback>): Promise<AWS.Res
     }
 }
 
-function handleUnauthorized() : Promise<AWS.Result> {
+function handleUnauthorized(): Promise<AWS.Result> {
     logInfo(`Handling unauthorized event.`);
     return new Promise(resolve => {
-       resolve({message: badRequest(new Error('No token.'))});
+        resolve({message: badRequest(new Error('No token.'))});
     });
 }
 
@@ -116,7 +115,7 @@ function isFromSlack(event: AnySlackCallback): boolean {
 function handleRequest(state: AWS.State<SlackEvent>): Promise<AWS.Result> {
     logInfo(`Handling event of type ${state.data.type}`);
 
-    if(!isFromSlack(<AnySlackCallback>state.data)) {
+    if (!isFromSlack(<AnySlackCallback>state.data)) {
         return handleUnauthorized();
     }
 

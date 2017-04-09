@@ -1,4 +1,4 @@
-import {Event} from './Event'
+import {Event} from "./Event";
 import {Callback} from "./Callback";
 
 export interface MessageEvent extends Event {

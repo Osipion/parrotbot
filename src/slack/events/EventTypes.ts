@@ -11,9 +11,11 @@ export default class EventType {
     static get challenge(): string {
         return 'url_verification';
     }
+
     static get debug(): string {
         return 'debug';
     }
+
     static get eventCallback(): string {
         return 'event_callback';
     }

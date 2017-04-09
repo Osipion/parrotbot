@@ -1,3 +1,4 @@
+///<reference path="../typings/index.d.ts"/>
 
 function sanitize(message: string): string {
     return message.replace(process.env.PARROTBOT_TOKEN, '{PARROTBOT_TOKEN}')

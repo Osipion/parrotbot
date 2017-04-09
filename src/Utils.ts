@@ -38,10 +38,10 @@ export function send(options: https.RequestOptions, body?: string): Promise<RawR
             });
 
             r.on('end', () => {
-                if(res.body) {
+                if (res.body) {
                     logInfo(res.body);
                 }
-                if(r.statusCode > 199 && r.statusCode < 300) {
+                if (r.statusCode > 199 && r.statusCode < 300) {
                     logInfo(`Completed posting message to ${res.host}${res.path}`);
                     resolve(res);
                 } else {
@@ -49,7 +49,7 @@ export function send(options: https.RequestOptions, body?: string): Promise<RawR
                 }
             });
         });
-        if(body) {
+        if (body) {
             request.write(body);
         }
         request.end();
@@ -67,13 +67,13 @@ export function run(event: AWS.Event, context: AWS.Context, callback: AWS.Callba
     logInfo(JSON.stringify({state: state}));
     lambda(state)
         .then((result: AWS.Result) => {
-        logInfo('Completed request with result: ' + JSON.stringify(result, null, 2));
-       if(result.error) {
-           callback(null, serverError(result.error));
-       } else {
-           callback(null, result.message);
-       }
-    }).catch((error: Error) => {
+            logInfo('Completed request with result: ' + JSON.stringify(result, null, 2));
+            if (result.error) {
+                callback(null, serverError(result.error));
+            } else {
+                callback(null, result.message);
+            }
+        }).catch((error: Error) => {
         callback(null, serverError(error))
     });
 }
