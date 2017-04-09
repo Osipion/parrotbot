@@ -1,6 +1,6 @@
 # Parrotbot
 
-Example/toy slack bot designed to be hosted in AWS
+Example/toy slack bot designed to be hosted in AWS. The following environment variables should be set:
 
 * TARGET_CHANNEL - the ID of the channel that parrotbot listens to
 * PARROTBOT_TOKEN - the token used by parrotbot to authenticate with slack's Web API
